@@ -1,5 +1,5 @@
 [package]
-name = "motif-maker"
+name = "sequence-motif-maker"
 version = "0.1.0"
 edition = "2024"
 

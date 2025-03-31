@@ -141,14 +141,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c19937216e9d3aa9956d9bb8dfc0b0c8beb6058fc4f7a4dc4d850edf86a237d6"
 
 [[package]]
-name = "motif-maker"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rand",
-]
-
-[[package]]
 name = "once_cell"
 version = "1.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -215,6 +207,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "99d9a13982dcf210057a8a78572b2217b667c3beacbf3a0d8b454f6f82837d38"
 dependencies = [
  "getrandom",
+]
+
+[[package]]
+name = "sequence-motif-maker"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rand",
 ]
 
 [[package]]
