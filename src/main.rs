@@ -44,6 +44,10 @@ fn main() {
 
     if args.random_n_start_sequences > 0 {
         for _ in 0..args.random_n_start_sequences {
+            if args.generate_header {
+                writeln!(file, ">TEST(+) HEADER").expect("Could not write to file");
+            }
+
             let random_sequence = generate_sequence(args.average_length, 1., &args.motif);
             writeln!(file, "{}", random_sequence).expect("Could not write to file");
         }
