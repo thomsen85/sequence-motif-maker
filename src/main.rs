@@ -22,15 +22,34 @@ struct Args {
     #[clap(long)]
     output: String,
 
-    #[clap(long)]
+    #[clap(long, default_value = "true")]
     generate_header: bool,
+
+    #[clap(long, default_value = "0")]
+    random_n_start_sequences: usize,
 }
 fn main() {
     let args = Args::parse();
 
     let mut file = File::create(&args.output).expect("Could not create file");
 
-    for _ in 0..args.sequences {
+    assert!(
+        args.random_n_start_sequences <= args.sequences,
+        "Number of random sequences cannot be greater than total sequences"
+    );
+    assert!(
+        args.average_length > args.motif.len(),
+        "Average length must be greater than motif length"
+    );
+
+    if args.random_n_start_sequences > 0 {
+        for _ in 0..args.random_n_start_sequences {
+            let random_sequence = generate_sequence(args.average_length, 1., &args.motif);
+            writeln!(file, "{}", random_sequence).expect("Could not write to file");
+        }
+    }
+
+    for _ in 0..(args.sequences - args.random_n_start_sequences) {
         if args.generate_header {
             writeln!(file, ">TEST(+) HEADER").expect("Could not write to file");
         }
@@ -53,7 +72,7 @@ fn generate_sequence(average_length: usize, error_rate: f64, motif: &str) -> Str
 
     let motif_poistion = rng.random_range(0..average_length - motif.len());
 
-    for i in 0..average_length {
+    for i in 0..(average_length - motif.len()) {
         if i == motif_poistion {
             for motif_base in motif.chars() {
                 if rng.random_bool(error_rate) {
